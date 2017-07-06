@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<robot name="roverbot_decorations" xmlns:xacro="http://ros.org/wiki/xacro">
+
+	<xacro:macro name="roverbot_decorate">
+
+		<link name="frontBumper">
+			<visual>
+				<geometry>
+					<mesh filename="package://roverbot_description/meshes/bumper.dae" />
+				</geometry>
+			</visual>
+		</link>
+
+	</xacro:macro>
+
+</robot>

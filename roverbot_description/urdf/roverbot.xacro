@@ -1,0 +1,418 @@
+<?xml version="1.0"?> 
+<robot name="roverbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<!--Link: Readme http://wiki.ros.org/urdf/XML/link-->
+	<!--Joint: Readme http://wiki.ros.org/urdf/XML/joint-->
+
+	<xacro:property name="PI" value="3.1415926535897931"/> 
+
+	<xacro:property name="chassisX" value="1"/> 
+	<xacro:property name="chassisY" value="0.5"/> 
+	<xacro:property name="chassisZ" value="0.20"/> 
+	<xacro:property name="chassisMass" value="25.0"/> 
+
+	<!-- Wheel Mounting Positions -->
+	<xacro:property name="wheel_vertical_offset" value="0.03282" />
+
+	<!-- Wheel Properties -->
+	<xacro:property name="wheelLength" value="0.05" />
+	<xacro:property name="wheelRadius" value="0.17775" />
+
+	<xacro:property name="wheelMass" value="2.637"/> 
+
+	<xacro:include filename="$(find roverbot)/roverbot_description/urdf/roverbot.gazebo" /> 
+	<xacro:include filename="$(find roverbot)/roverbot_description/urdf/materials.xacro" /> 
+	<xacro:include filename="$(find roverbot)/roverbot_description/urdf/macros.xacro" /> 
+	<xacro:include filename="$(find roverbot)/roverbot_description/urdf/roverbotWheel.xacro" /> 
+
+	<!-- root link, on the ground just below the model origin -->
+	<link name="footprint"/>
+
+	<joint name="base_link_joint" type="fixed">
+		<origin xyz="0 0 0" rpy="0 0 0" />
+		<parent link="footprint"/>
+		<child link="base_link" />
+	</joint>
+
+	<!--base_link-->
+	<link name="base_link">
+		<visual>
+			<geometry>
+				<box size="${chassisX} ${chassisY} ${chassisZ}"/> 
+			</geometry>
+			<material name="silver"/>
+		</visual>
+		<collision>
+			<origin xyz="0 0 ${chassisZ/4}" rpy="0 0 0" />
+			<geometry>
+				<box size="${chassisX} ${chassisY} ${chassisZ/2}"/>
+			</geometry>
+		</collision>
+		<collision>
+			<origin xyz="0 0 ${chassisZ*3/4}" rpy="0 0 0" />
+			<geometry>
+				<box size="${chassisX*4/5} ${chassisY} ${chassisZ/2}"/>
+			</geometry>
+		</collision>
+
+		<inertial>
+			<mass value="${chassisMass}"/>
+			<box_inertia m="${chassisMass}" x="${chassisX}" y="${chassisY}" z="${chassisZ}"/>
+		</inertial>
+	</link>
+
+	<!--Eje delantero-->
+	
+	<xacro:property name="AxleRadius" value="${wheelRadius/10}"/> 
+	<xacro:property name="AxleLenght" value="${chassisY+0.1}"/> 
+	<xacro:property name="AxleMass" value="1.0"/> 
+
+	<xacro:property name="AxlePositionX" value="${chassisX/3}"/> 
+	<xacro:property name="AxlePositionY" value="0"/> 
+	<xacro:property name="AxlePositionZ" value="0"/> 
+
+	<link name="frontAxle">
+		<visual>
+			<origin xyz="0 0 0" rpy="${PI/2} 0 0" />
+			<geometry>
+				<cylinder length="${AxleLenght}" radius="${AxleRadius}" />
+			</geometry>
+			<material name="silver"/>
+		</visual>
+		
+		<inertial>
+			<mass value="${AxleMass}"/> 
+			<cylinder_inertia m="${AxleMass}" r="${AxleRadius}" h="${AxleLenght}"/>
+		<!--Esto esta sustituido en macros.xacros inertia inertia ixx="0.015" iyy="0.0375" izz="0.0375" ixy="0" ixz="0" iyz="0"/-->
+		</inertial>
+	</link>
+
+	<joint name="frontAxle_joint" type="fixed">
+		<parent link="base_link"/>
+		<child link="frontAxle"/>
+		<origin xyz="${AxlePositionX} ${AxlePositionY} ${AxlePositionZ}" rpy="0 0 0"/>
+	</joint>
+
+	<!--Eje trasero-->
+
+	<link name="backAxle">
+		<visual>
+			<origin xyz="0 0 0" rpy="${PI/2} 0 0" />
+			<geometry>
+				<cylinder length="${AxleLenght}" radius="${AxleRadius}" />
+			</geometry>
+			<material name="silver"/>
+		</visual>
+		
+		<inertial>
+			<mass value="${AxleMass}"/> 
+			<cylinder_inertia m="${AxleMass}" r="${AxleRadius}" h="${AxleLenght}"/>
+		<!--Esto esta sustituido en macros.xacros inertia inertia ixx="0.015" iyy="0.0375" izz="0.0375" ixy="0" ixz="0" iyz="0"/-->
+		</inertial>
+	</link>
+
+	<joint name="backAxle_joint" type="fixed">
+		<parent link="base_link"/>
+		<child link="backAxle"/>
+		<origin xyz="${-AxlePositionX} ${AxlePositionY} ${AxlePositionZ}"/>
+	</joint>
+
+
+	<!--llantas-->
+
+	<xacro:property name="WheelPositionX" value="0"/> 
+	<xacro:property name="WheelPositionY" value="${(AxleLenght/2)+(wheelLength/2)}"/> 
+	<xacro:property name="WheelPositionZ" value="0"/> 
+
+	<!-- Roverbot wheel macros -->
+	<xacro:roverbotWheel wheel="rightBackTire" axle="backAxle">
+		<origin xyz="${WheelPositionX} ${-WheelPositionY} ${WheelPositionZ}"/>
+	</xacro:roverbotWheel>
+	<xacro:roverbotWheel wheel="leftBackTire" axle="backAxle">
+		<origin xyz="${WheelPositionX} ${WheelPositionY} ${WheelPositionZ}"/>
+	</xacro:roverbotWheel>
+	<xacro:roverbotWheel wheel="rightFrontTire" axle="frontAxle">
+		<origin xyz="${WheelPositionX} ${-WheelPositionY} ${WheelPositionZ}"/>
+	</xacro:roverbotWheel>
+	<xacro:roverbotWheel wheel="leftFrontTire" axle="frontAxle">
+		<origin xyz="${WheelPositionX} ${WheelPositionY} ${WheelPositionZ}"/>
+	</xacro:roverbotWheel>
+
+	<!--Bumpers-->
+
+	<xacro:property name="bumperLength" value="${chassisX/10}"/> 
+	<xacro:property name="bumperWidth" value="${chassisY-(chassisY/4)}"/> 
+	<xacro:property name="bumperHeight" value="${chassisZ}"/> 
+	<xacro:property name="bumperMass" value="0.4"/> 
+
+	<!--Bumper delantero-->
+
+	<xacro:property name="bumperPositionX" value="${((chassisX/2)-AxlePositionX)+(bumperLength/2)}"/> 
+	<xacro:property name="bumperPositionY" value="0"/> 
+	<xacro:property name="bumperPositionZ" value="0"/> 
+
+	<link name="frontBumper">
+		<collision>
+			<geometry>
+				<box size="${bumperLength} ${bumperWidth} ${bumperHeight}"/>
+			</geometry>
+		</collision>
+
+		<visual>
+			<geometry>
+				<box size="${bumperLength} ${bumperWidth} ${bumperHeight}"/>
+			</geometry>
+			<material name="grey"/>
+		</visual>
+
+		<inertial>
+			<mass value="${bumperMass}"/>
+			<box_inertia m="${bumperMass}" x="${bumperLength}" y="${bumperWidth}" z="${bumperHeight}"/>
+		</inertial>
+	</link>
+
+	<joint name="frontBumper_joint" type="fixed">
+		<parent link="frontAxle"/>
+		<child link="frontBumper"/>
+		<origin xyz="${bumperPositionX} ${bumperPositionY} ${bumperPositionZ}" rpy="0 0 0" />
+	</joint>
+
+	<!--Bumper trasero-->
+
+	<link name="BackBumper">
+		<collision>
+			<geometry>
+				<box size="${bumperLength} ${bumperWidth} ${bumperHeight}"/>
+			</geometry>
+		</collision>
+
+		<visual>
+			<geometry>
+				<box size="${bumperLength} ${bumperWidth} ${bumperHeight}"/>
+			</geometry>
+			<material name="grey"/>
+		</visual>
+
+		<inertial>
+			<mass value="${bumperMass}"/>
+			<box_inertia m="${bumperMass}" x="${bumperLength}" y="${bumperWidth}" z="${bumperHeight}"/>
+		</inertial>
+	</link>
+
+	<joint name="BackBumper_joint" type="fixed">
+		<parent link="backAxle"/>
+		<child link="BackBumper"/>
+		<origin xyz="${-bumperPositionX} ${bumperPositionY} ${bumperPositionZ}" rpy="0 0 0" />
+	</joint>
+
+	<!--Encerramiento componentes-->
+
+	<xacro:property name="enclosureLength" value="${chassisX+bumperLength/2}"/> 
+	<xacro:property name="enclosureWidth" value="${chassisY}"/> 
+	<xacro:property name="enclosureHeight" value="${chassisZ/15}"/> 
+	<xacro:property name="enclosureMass" value="0.4"/> 
+
+	<xacro:property name="enclosurePositionX" value="0"/> 
+	<xacro:property name="enclosurePositionY" value="0"/> 
+	<xacro:property name="enclosurePositionZ" value="${(chassisZ/2)+(enclosureHeight/2)}"/> 
+
+	<link name="enclosure">
+		<visual>
+			<geometry>
+				<box size="${enclosureLength} ${enclosureWidth} ${enclosureHeight}"/>
+			</geometry>
+			<material name="silver"/>
+		</visual>
+
+		<inertial>
+			<mass value="${enclosureMass}"/>
+			<box_inertia m="${enclosureMass}" x="${enclosureLength}" y="${enclosureWidth}" z="${enclosureHeight}"/>
+		</inertial>
+	</link>
+
+	<joint name="enclosure_joint" type="fixed">
+		<parent link="base_link"/>
+		<child link="enclosure"/>
+		<origin rpy="0 0 0" xyz="${enclosurePositionX} ${enclosurePositionY} ${enclosurePositionZ}"/>
+	</joint>
+
+
+	<!-- Interial link stores the robot's inertial information no me convese mucho-->
+
+	<xacro:property name="inertialPositionX" value="-0.08748"/> 
+	<xacro:property name="inertialPositionY" value="-0.00085"/> 
+	<xacro:property name="inertialPositionZ" value="0.09947"/> 
+	<xacro:property name="cero" value="0"/> 
+	<xacro:property name="inertialMass" value="33.455"/> 
+
+	<link name="inertial_link">
+		<inertial>
+			<mass value="${inertialMass}"/>
+			<origin xyz="${inertialPositionX} ${inertialPositionY} ${inertialPositionZ}"/>
+			<inertia ixx="0.6022" ixy="-0.02364" ixz="-0.1197" iyy="1.7386" iyz="-0.001544" izz="2.0296"/>
+		</inertial>
+	</link>
+
+	<joint name="inertial_joint" type="fixed">
+		<origin xyz="0 0 0" rpy="0 0 0"/>
+		<parent link="base_link"/>
+		<child link="inertial_link"/>
+	</joint>
+
+
+	<!--link & joint sensor laser -->
+
+	<xacro:property name="laserLength" value="0.1"/> 
+	<xacro:property name="laserWidth" value="0.1"/> 
+	<xacro:property name="laserHeight" value="0.1"/> 
+	<xacro:property name="laserMass" value="1e-5"/> 
+
+	<xacro:property name="laserPositionX" value="${chassisX-chassisX}"/> 
+	<xacro:property name="laserPositionY" value="${chassisY-chassisY}"/> 
+	<xacro:property name="laserPositionZ" value="${(chassisZ*2)}"/> 
+
+	<link name="laser_link">
+		<visual>
+			<geometry>
+				<box size="${laserLength} ${laserWidth} ${laserHeight}"/>
+			</geometry>
+			<material name="orange"/> 
+		</visual>	
+
+		<inertial>
+			<mass value="${laserMass}" />
+			<box_inertia m="${laserMass}" x="${laserLength}" y="${laserWidth}" z="${laserHeight}"/>
+		</inertial>
+	</link>
+
+	<joint name="laser_joint" type="fixed">
+		<origin xyz="${laserPositionX} ${laserPositionY} ${laserPositionZ}" rpy="0 0 0"/>
+		<parent link="base_link"/>
+		<child link="laser_link"/>
+	</joint>
+
+	<!-- imu-->
+
+	<xacro:property name="imuLength" value="0.01"/> 
+	<xacro:property name="imuWidth" value="0.01"/> 
+	<xacro:property name="imuHeight" value="0.01"/> 
+	<xacro:property name="imuMass" value="0.001"/> 
+
+	<xacro:property name="imuPositionX" value="${enclosureLength-enclosureLength}"/> 
+	<xacro:property name="imuPositionY" value="${enclosureWidth-enclosureWidth}"/> 
+	<xacro:property name="imuPositionZ" value="${(enclosureHeight/2)+(imuHeight/2)}"/> 
+
+	<xacro:property name="imuX" value="1"/> 
+	<xacro:property name="imuY" value="0"/> 
+	<xacro:property name="imuZ" value="0"/> 
+
+	<link name="imu_link">
+		<collision>
+			<geometry>
+				<box size="${imuLength} ${imuWidth} ${imuHeight}"/>
+			</geometry>
+		</collision>
+
+		<visual>
+			<geometry>
+				<box size="${imuLength} ${imuWidth} ${imuHeight}"/>
+			</geometry>
+			<material name="red"/> 
+		</visual>	
+
+		<inertial>
+			<mass value="${imuMass}" />
+			<box_inertia m="${imuMass}" x="${imuLength}" y="${imuWidth}" z="${imuHeight}"/>
+		</inertial>
+	</link>
+
+	<joint name="imu_joint" type="fixed">
+		<axis xyz="${imuX} ${imuY} ${imuZ}"/>      
+		<origin xyz="${imuPositionX} ${imuPositionY} ${imuPositionZ}"/>
+		<parent link="base_link"/>
+		<child link="imu_link"/>
+  	</joint>
+
+	<!--GPS-->
+
+	<xacro:property name="gpsLength" value="0.04"/> 
+	<xacro:property name="gpsWidth" value="0.177"/> 
+	<xacro:property name="gpsHeight" value="0.020"/> 
+	<xacro:property name="gpsMass" value="1e-5"/> 
+
+	<xacro:property name="gpsPositionX" value="${-(enclosureLength/4)}"/> 
+	<xacro:property name="gpsPositionY" value="${enclosureWidth-enclosureWidth}"/> 
+	<xacro:property name="gpsPositionZ" value="${(chassisZ*3)}"/> 
+
+	<xacro:property name="gpsX" value="1"/> 
+	<xacro:property name="gpsY" value="0"/> 
+	<xacro:property name="gpsZ" value="0"/> 
+
+	<link name="gps_link">
+		<collision>
+			<geometry>
+				<box size="${gpsLength} ${gpsWidth} ${gpsHeight}"/>
+			</geometry>
+		</collision>
+
+		<visual>
+			<geometry>
+				<box size="${gpsLength} ${gpsWidth} ${gpsHeight}"/>
+			</geometry>
+			<material name="yellow"/> 
+		</visual>	
+
+		<inertial>
+			<mass value="${gpsMass}" />
+			<box_inertia m="${gpsMass}" x="${gpsLength}" y="${gpsWidth}" z="${gpsHeight}"/>
+			<!--inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" /-->
+		</inertial>
+	</link>
+
+	<joint name="gps_joint" type="fixed">
+		<axis xyz="${gpsX} ${gpsY} ${gpsZ}"/>      
+		<origin xyz="${gpsPositionX} ${gpsPositionY} ${gpsPositionZ}"/>
+		<parent link="base_link"/>
+		<child link="gps_link"/>
+  	</joint>
+
+	<!--link & joint sensor kinect -->
+
+	<xacro:property name="kinectLength" value="0.04"/> 
+	<xacro:property name="kinectWidth" value="0.177"/> 
+	<xacro:property name="kinectHeight" value="0.020"/> 
+	<xacro:property name="kinectMass" value="1e-5"/> 
+
+	<xacro:property name="kinectPositionX" value="${(enclosureLength/4)+(enclosureLength/8)}"/> 
+	<xacro:property name="kinectPositionY" value="${enclosureWidth-enclosureWidth}"/> 
+	<xacro:property name="kinectPositionZ" value="${(enclosureHeight/2)+(kinectHeight/2)}"/> 
+
+	<link name="kinect_link">
+		<collision>
+			<geometry>
+				<box size="${kinectLength} ${kinectWidth} ${kinectHeight}"/>
+			</geometry>
+		</collision>
+
+		<visual>
+			<geometry>
+				<box size="${kinectLength} ${kinectWidth} ${kinectHeight}"/>
+			</geometry>
+			<material name="blue"/> 
+		</visual>	
+
+		<inertial>
+			<mass value="${kinectMass}" />
+			<box_inertia m="${kinectMass}" x="${kinectLength}" y="${kinectWidth}" z="${kinectHeight}"/>
+			<!--inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" /-->
+		</inertial>
+	</link>
+
+	<joint name="kinect_joint" type="fixed">
+		<origin xyz="${kinectPositionX} ${kinectPositionY} ${kinectPositionZ}" rpy="0 0 0"/>
+		<parent link="enclosure"/>
+		<child link="kinect_link"/>
+	</joint>
+
+
+</robot>

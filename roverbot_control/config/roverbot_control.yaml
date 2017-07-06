@@ -1,0 +1,24 @@
+mybot:
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50  
+  
+
+  # Effort Controllers ---------------------------------------
+  leftFrontTire_effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: leftFrontTire_joint
+    pid: {p: 100.0, i: 0.1, d: 10.0}
+  rightFrontTire_effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: rightFrontTire_joint
+    pid: {p: 100.0, i: 0.1, d: 10.0}
+  leftBackTire_effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: leftBackTire_joint
+    pid: {p: 100.0, i: 0.1, d: 10.0}
+  rightBackTire_effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: rightBackTire_joint
+    pid: {p: 100.0, i: 0.1, d: 10.0}

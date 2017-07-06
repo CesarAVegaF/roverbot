@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+<sdf version="1.4">
+  <world name="default">
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+	<include>
+		<pose>2.593762 8.522524 0.013796 .0 .0 .0</pose>
+	      <uri>model://Robot</uri>
+	</include>
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <model name="my_mesh">
+      <pose>0 0 0  0 0 0</pose>
+      <static>true</static>
+      <link name="body">
+	<collision name="geom">
+          <geometry>
+            <mesh><uri>file://pasto1.dae</uri></mesh>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <mesh><uri>file://pasto1.dae</uri></mesh>
+          </geometry>
+        </visual>
+      </link>
+	<link name="Box1">
+		<pose>7.675451 -6.285091 0.523794 .0 .0 .0</pose>
+		<inertial>
+        		<mass>0.1</mass>
+      		</inertial>
+		<collision name="Box1_collision">
+		        <geometry>
+			        <box>
+				        <size>1 1 1</size>
+			          </box>
+		        </geometry>
+		</collision>
+		<visual name="Box1_visual">
+		        <geometry>
+			          <box>
+            				<size>1 1 1</size>
+			          </box>
+		        </geometry>
+		</visual>
+	</link>
+	<link name="Box2">
+		<pose>12.094172 -1.407658 0.523194 .0 .0 .0</pose>
+		<inertial>
+        		<mass>0.1</mass>
+      		</inertial>
+		<collision name="Box2_collision">
+		        <geometry>
+			        <box>
+				        <size>1 1 1</size>
+			          </box>
+		        </geometry>
+		</collision>
+		<visual name="Box2_visual">
+		        <geometry>
+			          <box>
+            				<size>1 1 1</size>
+			          </box>
+		        </geometry>
+		</visual>
+	</link>
+	<link name="Box3">
+		<pose>10.69540 5.231697 0.523794 .0 .0 .0</pose>
+		<inertial>
+        		<mass>0.1</mass>
+      		</inertial>
+		<collision name="Box3_collision">
+		        <geometry>
+			        <box>
+				        <size>1 1 1</size>
+			          </box>
+		        </geometry>
+		</collision>
+		<visual name="Box3_visual">
+		        <geometry>
+			          <box>
+            				<size>1 1 1</size>
+			          </box>
+		        </geometry>
+		</visual>
+	</link>
+	<link name="Box4">
+		<pose>5.8616919 9.229774 0.523794 .0 .0 .0</pose>
+		<inertial>
+        		<mass>0.1</mass>
+      		</inertial>
+		<collision name="Box4_collision">
+		        <geometry>
+			        <box>
+				        <size>1 1 1</size>
+			          </box>
+		        </geometry>
+		</collision>
+		<visual name="Box4_visual">
+		        <geometry>
+			          <box>
+            				<size>1 1 1</size>
+			          </box>
+		        </geometry>
+		</visual>
+	</link>
+
+	<link name="Cilindro1">
+		<pose>8.117650 8.651960 0.523794 0 0 0</pose>
+		<collision name="collision">
+			<geometry>
+				<cylinder>
+					<radius>0.5</radius>
+					<length>1</length>
+				</cylinder>
+			</geometry>
+		</collision>
+		
+		<visual name="visual">
+			<geometry>
+				<cylinder>
+					<radius>0.5</radius>
+					<length>1</length>
+				</cylinder>
+			</geometry>
+		</visual>
+	</link>
+	
+	<link name="Cilindro2">
+		<pose>12.244259 2.348959 0.523787 0 0 0</pose>
+		<collision name="collision">
+			<geometry>
+				<cylinder>
+					<radius>0.5</radius>
+					<length>1</length>
+				</cylinder>
+			</geometry>
+		</collision>
+		
+		<visual name="visual">
+			<geometry>
+				<cylinder>
+					<radius>0.5</radius>
+					<length>1</length>
+				</cylinder>
+			</geometry>
+		</visual>
+	</link>
+
+	<link name="Cilindro3">
+		<pose>11.672030 -4.734337 0.523787 0 0 0</pose>
+		<collision name="collision">
+			<geometry>
+				<cylinder>
+					<radius>0.5</radius>
+					<length>1</length>
+				</cylinder>
+			</geometry>
+		</collision>
+		
+		<visual name="visual">
+			<geometry>
+				<cylinder>
+					<radius>0.5</radius>
+					<length>1</length>
+				</cylinder>
+			</geometry>
+		</visual>
+	</link>
+	<link name="Cilindro4">
+		<pose>9.533050 7.296705 0.523792 0 0 0</pose>
+		<collision name="collision">
+			<geometry>
+				<cylinder>
+					<radius>0.5</radius>
+					<length>1</length>
+				</cylinder>
+			</geometry>
+		</collision>
+		
+		<visual name="visual">
+			<geometry>
+				<cylinder>
+					<radius>0.5</radius>
+					<length>1</length>
+				</cylinder>
+			</geometry>
+		</visual>
+	</link>
+	    </model>
+  </world>
+</sdf>
+

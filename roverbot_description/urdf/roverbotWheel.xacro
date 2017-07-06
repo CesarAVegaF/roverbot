@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<robot name="roverbotWheel" xmlns:xacro="http://ros.org/wiki/xacro">
+
+	<xacro:macro name="roverbotWheel" params="wheel axle *joint_pose">
+		<link name="${wheel}">
+			<inertial>
+				<mass value="${wheelMass}" />
+				<origin xyz="0 0 0" />
+				<!--inertia  ixx="0.02467" ixy="0" ixz="0" iyy="0.02467" iyz="0" izz="0.04411" /-->
+				<cylinder_inertia m="${wheelMass}" r="${wheelRadius}" h="${wheelLength}"/> 
+			</inertial>
+			<visual>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<geometry>
+					<!--cylinder length="${wheelLength}" radius="${wheelRadius}" /-->
+					<mesh filename="package://roverbot/roverbot_description/meshes/wheel.dae" />
+				</geometry>
+			</visual>
+			<collision>
+				<origin xyz="0 0 0" rpy="${PI/2} 0 0" />
+				<geometry>
+					<cylinder length="${wheelLength}" radius="${wheelRadius}" />
+				</geometry>
+			</collision>
+		</link>
+
+		<gazebo reference="${wheel}">
+			<mu1 value="1.0"/>
+			<mu2 value="1.0"/>
+			<kp value="10000000.0" />
+			<kd value="1.0" />
+			<fdir1 value="1 0 0"/>
+		</gazebo>
+
+		<joint name="${wheel}_joint" type="continuous">
+			<parent link="${axle}"/>
+			<child link="${wheel}"/>
+			<xacro:insert_block name="joint_pose"/>
+			<axis xyz="0 1 0" rpy="0 0 0" />
+		</joint>
+
+	</xacro:macro>
+</robot>
