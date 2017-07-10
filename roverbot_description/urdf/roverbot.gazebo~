@@ -135,7 +135,7 @@
 	<gazebo>
 		<plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
 			<alwaysOn>true</alwaysOn>
-			<bodyName>base_link</bodyName>
+			<bodyName>roverbot/base_link</bodyName>
 			<topicName>imu</topicName>
 			<serviceName>imu_service</serviceName>
 			<gaussianNoise>0.0</gaussianNoise>
@@ -148,7 +148,7 @@
 		<plugin name="novatel_gps_sim" filename="libhector_gazebo_ros_gps.so">
 			<alwaysOn>1</alwaysOn>
 			<updateRate>10.0</updateRate>
-			<bodyName>base_link</bodyName>
+			<bodyName>roverbot/base_link</bodyName>
 			<topicName>gps</topicName>
 			<velocityTopicName>gps_velocity</velocityTopicName>
 			<drift>5.0 5.0 5.0</drift>

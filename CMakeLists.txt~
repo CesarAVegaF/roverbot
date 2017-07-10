@@ -7,11 +7,14 @@ find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs genmsg tf laser_ge
 ## Generate added messages and services
 generate_messages(DEPENDENCIES std_msgs)
 
+
+find_package(catkin REQUIRED)
+catkin_metapackage()
 ## Declare a catkin package
 catkin_package()
 
 ## Declare a C++ executable
-add_executable(roverbot_teleop roverbot_control/src/teleop_node.cpp)
+add_executable(roverbot_teleop roverbot_control/src/roverbot_teleop.cpp)
 
  target_link_libraries(roverbot_teleop
    ${catkin_LIBRARIES}

@@ -142,7 +142,7 @@
       </model>
     </state>
     <model name="my_mesh">
-      <pose>10 0 0 0 0 0</pose>
+      <pose>15 0 0 0 0 0</pose>
       <!--pose>0 0 0  0 0 0</pose-->
       <static>true</static>
       <link name="body">

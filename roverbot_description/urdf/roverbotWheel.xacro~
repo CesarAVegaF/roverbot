@@ -13,7 +13,7 @@
 				<origin xyz="0 0 0" rpy="${PI/2} 0 0" />
 				<geometry>
 					<!--cylinder length="${wheelLength}" radius="${wheelRadius}" /-->
-					<mesh filename="package://roverbot/roverbot_description/meshes/wheel.dae" />
+					<mesh filename="package://roverbot_description/meshes/wheel.dae" />
 				</geometry>
 			</visual>
 			<collision>
@@ -23,6 +23,13 @@
 			</collision>
 		</link>
 
+		<gazebo reference="${wheel}">
+			<mu1 value="1.0"/>
+			<mu2 value="1.0"/>
+			<kp value="10000000.0" />
+			<kd value="1.0" />
+			<fdir1 value="1 0 0"/>
+		</gazebo>
 
 		<joint name="${wheel}_joint" type="continuous">
 			<parent link="${axle}"/>
