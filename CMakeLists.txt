@@ -10,8 +10,12 @@ generate_messages(DEPENDENCIES std_msgs)
 ## Declare a catkin package
 catkin_package()
 
-add_executable(roverbot_teleop roverbot_gazebo/src/roverbot_teleop.cpp)
-target_link_libraries(roverbot_teleop ${catkin_LIBRARIES})
+## Declare a C++ executable
+add_executable(roverbot_teleop roverbot_control/src/roverbot_teleop.cpp)
+
+ target_link_libraries(roverbot_teleop
+   ${catkin_LIBRARIES}
+ )
 
 ## Build talker and listener
 include_directories(include ${catkin_INCLUDE_DIRS} ${Eigen_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIR})

@@ -102,9 +102,9 @@
           </geometry>
           <material>
             <script>
-              <uri>model://asphalt_plane/materials/scripts</uri>
-              <uri>model://asphalt_plane/materials/textures</uri>
-              <name>vrc/asphalt</name>
+              <uri>model://grass_plane/materials/scripts</uri>
+              <uri>model://grass_plane/materials/textures</uri>
+              <name>vrc/grass</name>
             </script>
           </material>
         </visual>
@@ -141,11 +141,5 @@
         </link>
       </model>
     </state>
-    <gui fullscreen='0'>
-      <camera name='user_camera'>
-        <pose>16.2337 1.23674 17.6497 0 0.923643 -3.08299</pose>
-        <view_controller>orbit</view_controller>
-      </camera>
-    </gui>
   </world>
 </sdf>

@@ -120,38 +120,70 @@ public:
 	normaCloud.push_back(yCloud);
 	normaCloud.push_back(zCloud);
 	
-	float rango = (normaCloud[0] * 5.0)/100.0; // Tolerancia de error
+	float rango = (normaCloud[0] * 7.5)/100.0; // Tolerancia de error
+	
+	dataGroup.push_back(normaCloudPas); // añade los datos al grupo
 
 	// si esta dentro de la tolerancia hace parte del grupo de datos del objeto
 	// Si no, hace parte del vertice del objeto, por lo tanto entra a la condicion y verifica el punto minimo
 	if (normaCloudPas[0] > normaCloud[0]+rango || normaCloudPas[0] < normaCloud[0]-rango){
-	    dataGroup.push_back(normaCloudPas); // añade los datos al grupo
-            vector<float> minDistance = normaBot; //Distancia de comparación
-	    double theta = 0; // ángulo incial
+	    
+            //Distancia de comparación
+            // ángulo y distancia del punto mas cerca
+            vector<float> minDistance = normaBot; 
+	    double theta = 0; 
+	    // Angulo minimo
+            vector<float> minNorma; 
+	    double minTheta = 1000;
+            //Angulo maximo
+            vector<float> maxNorma; 
+	    double maxTheta = 0;
+
+	    int sizeGroup = dataGroup.size();
 	    vector<float> floatTemp;
 	    // verifica todos los datos en el grupo encontrando el menor
-	    for(unsigned int j = 0; j < dataGroup.size(); j++){
+	    for(unsigned int j = 0; j < sizeGroup; j++){
 		floatTemp = dataGroup[j];
-		if(minDistance[0] >= floatTemp[0]){
-		    minDistance = floatTemp;
-		}
+	        // cos(theta) = InnerPorduct(u, v) / |u|*|v| 
+	        norma = normaBot[0]*floatTemp[0]; // |u|*|v| 
+
+	        prodIn = (normaBot[1]*floatTemp[1])+(normaBot[2]*floatTemp[2])+(normaBot[3]*floatTemp[3]); // InnerPorduct(u, v)
+
+	        cosA = prodIn/norma; // InnerPorduct(u, v) / |u|*|v|
+
+	        theta = acos(cosA) * (180 / PI); // theta = cos-1(InnerPorduct(u, v) / |u|*|v| )
+
+	        // punto mas cercano 
+	        if(minDistance[0] > floatTemp[0]){
+	           minDistance = floatTemp;
+	        }
+
+	        // punto minimo en angulo
+	        if(minTheta > theta){
+	           minTheta = theta;
+	           minNorma = floatTemp;
+	        }
+
+	        // punto maximo en angulo
+	        if(maxTheta < theta){
+	           maxTheta = theta;
+	           maxNorma = floatTemp;
+	        }
+			
 	    }
-	    
-	    // cos(theta) = InnerPorduct(u, v) / |u|*|v| 
-	    norma = normaBot[0]*minDistance[0]; // |u|*|v| 
-
-	    prodIn = (normaBot[1]*minDistance[1])+(normaBot[2]*minDistance[2])+(normaBot[3]*minDistance[3]); // InnerPorduct(u, v)
-
-            cosA = prodIn/norma; // InnerPorduct(u, v) / |u|*|v| 
-
-	    theta = acos(cosA) * (180 / PI); // theta = cos-1(InnerPorduct(u, v) / |u|*|v| )
 	    // Verifica el angulo de donde proviene, si y+ el angulo es positivo, en caso contrario y- el angulo es negativo
-	    if(yCloud < 0){
-                theta *= -1;
-            }	
+	    if(minDistance[2] < 0){
+		theta *= -1;
+		minTheta *= -1;
+		maxTheta *= -1;
+	    }
 	    // filtra casos donde esta en el borde del radar
 	    if(minDistance[0] < 29.8){
-	        printf("Hay %d obstaculo(s) a: %4.2f m, con un ángulo de: %4.2f. \n", obstaculos++, minDistance[0], theta);
+		printf("Obstaculo: %d\n", obstaculos++);
+		printf("Rango de vision sobre el obstaculo:\n"); 
+		printf("angulo --> %4.2f; distancia --> %4.4f m\n", minTheta, minNorma[0]);
+		printf("angulo --> %4.2f; distancia --> %4.4f m\n", maxTheta, maxNorma[0]);
+	        printf("Punto cercano: angulo --> %4.2f; distancia --> %4.4f m\n", theta, minDistance[0]);
 	    }
 	    dataGroup.clear(); // limpia el vector usado
 	}
