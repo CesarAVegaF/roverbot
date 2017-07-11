@@ -14,7 +14,7 @@
 		<!--arg name="world_name" value="$(find roverbot)/roverbot_gazebo/worlds/grass_plane.world"/-->
 		<arg name="world_name" value="$(find roverbot)/roverbot_gazebo/worlds/TerrenoMonte.world"/>
 		<!-- se referencia el lugar donde se encuentran los modelos-->
-		<env name="GAZEBO_MODEL_PATH" value="$(find roverbot)/roverbot_gazebo/worlds/models/"/>
+		<env name="GAZEBO_MODEL_PATH" value="$(find roverbot)/roverbot_gazebo/worlds/models/" />
 		<arg name="debug" value="$(arg debug)" />
 		<arg name="gui" value="$(arg gui)" />
 		<arg name="paused" value="$(arg paused)"/>

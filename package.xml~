@@ -17,7 +17,11 @@
   <build_depend>std_msgs</build_depend>
   <build_depend>message_generation</build_depend>
   <build_depend>laser_geometry</build_depend>
+  <build_depend>joy</build_depend>
+  <build_depend>roslaunch</build_depend>
+  <build_depend>roslint</build_depend>
 
+  <run_depend>joy</run_depend>
   <run_depend>laser_geometry</run_depend>
   <run_depend>message_runtime</run_depend>
   <run_depend>geometry_msgs</run_depend>
@@ -28,7 +32,7 @@
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
-    <gazebo_ros GAZEBO_MODEL_PATH="$(find roverbot)/roverbot_gazebo/worlds/" /> 
+    <gazebo_ros GAZEBO_MODEL_PATH="${prefix}/.." /> 
   </export>
 
 </package>

@@ -13,7 +13,7 @@
 				<origin xyz="0 0 0" rpy="${PI/2} 0 0" />
 				<geometry>
 					<!--cylinder length="${wheelLength}" radius="${wheelRadius}" /-->
-					<mesh filename="package://roverbot_description/meshes/wheel.dae" />
+					<mesh filename="package://roverbot/roverbot_description/meshes/wheel.dae" />
 				</geometry>
 			</visual>
 			<collision>

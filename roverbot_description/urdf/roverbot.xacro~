@@ -126,16 +126,16 @@
 
 	<!-- Roverbot wheel macros -->
 	<xacro:roverbotWheel wheel="rightBackTire" axle="backAxle">
-		<origin xyz="${WheelPositionX} ${-WheelPositionY} ${WheelPositionZ}"/>
+		<origin rpy="-1.5708 0 0" xyz="${WheelPositionX} ${-WheelPositionY} ${WheelPositionZ}"/>
 	</xacro:roverbotWheel>
 	<xacro:roverbotWheel wheel="leftBackTire" axle="backAxle">
-		<origin xyz="${WheelPositionX} ${WheelPositionY} ${WheelPositionZ}"/>
+		<origin rpy="-1.5708 0 0" xyz="${WheelPositionX} ${WheelPositionY} ${WheelPositionZ}"/>
 	</xacro:roverbotWheel>
 	<xacro:roverbotWheel wheel="rightFrontTire" axle="frontAxle">
-		<origin xyz="${WheelPositionX} ${-WheelPositionY} ${WheelPositionZ}"/>
+		<origin rpy="-1.5708 0 0" xyz="${WheelPositionX} ${-WheelPositionY} ${WheelPositionZ}"/>
 	</xacro:roverbotWheel>
 	<xacro:roverbotWheel wheel="leftFrontTire" axle="frontAxle">
-		<origin xyz="${WheelPositionX} ${WheelPositionY} ${WheelPositionZ}"/>
+		<origin rpy="-1.5708 0 0" xyz="${WheelPositionX} ${WheelPositionY} ${WheelPositionZ}"/>
 	</xacro:roverbotWheel>
 
 	<!--Bumpers-->

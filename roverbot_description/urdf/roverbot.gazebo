@@ -1,11 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-	<gazebo>
-		<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-			<robotNamespace>/roverbot</robotNamespace>
-		</plugin>
-	</gazebo>
 
 	<!-- establecer los colores y material-->
 	<gazebo reference="base_link"> 
@@ -73,23 +68,23 @@
 			<rightFrontJoint>rightFrontTire_joint</rightFrontJoint>
 			<leftRearJoint>leftBackTire_joint</leftRearJoint>
 			<rightRearJoint>rightBackTire_joint</rightRearJoint>
-			<wheelSeparation>1.5</wheelSeparation>
-			<wheelDiameter>0.110</wheelDiameter>
+			<wheelSeparation>${AxlePositionX}</wheelSeparation>
+			<wheelDiameter>${wheelRadius}</wheelDiameter>
 			<torque>20</torque>
 			<robotBaseFrame>base_link</robotBaseFrame>
 	      </plugin>
 	</gazebo>
 
-	<!-- Plugin odom 
+	<!-- Plugin odom -->
 	<gazebo>
 		<plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
-			<commandTopic>roverbot/cmd_vel</commandTopic>
-			<odometryTopic>roverbot/odom</odometryTopic>
+			<commandTopic>cmd_vel</commandTopic>
+			<odometryTopic>odom</odometryTopic>
 			<odometryFrame>odom</odometryFrame>
 			<odometryRate>10.0</odometryRate>
 			<robotBaseFrame>footprint</robotBaseFrame>
 		</plugin>
-	</gazebo-->
+	</gazebo>
 
 	<!-- Señales faltantes en  state_publisher -->
 	<gazebo>
@@ -115,7 +110,7 @@
 				</scan>
 				<range>
 					<min>0.10</min>
-					<max>30.0</max>
+					<max>6.0</max>
 					<resolution>0.01</resolution>
 				</range>
 				<noise>
