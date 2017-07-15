@@ -68,7 +68,7 @@
 			<rightFrontJoint>rightFrontTire_joint</rightFrontJoint>
 			<leftRearJoint>leftBackTire_joint</leftRearJoint>
 			<rightRearJoint>rightBackTire_joint</rightRearJoint>
-			<wheelSeparation>${AxlePositionX*2}</wheelSeparation>
+			<wheelSeparation>${AxlePositionX}</wheelSeparation>
 			<wheelDiameter>${wheelRadius}</wheelDiameter>
 			<torque>20</torque>
 			<robotBaseFrame>base_link</robotBaseFrame>
@@ -78,8 +78,8 @@
 	<!-- Plugin odom -->
 	<gazebo>
 		<plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
-			<commandTopic>cmd_vel</commandTopic>
-			<odometryTopic>odom</odometryTopic>
+			<commandTopic>roverbot/cmd_vel</commandTopic>
+			<odometryTopic>roverbot/odom</odometryTopic>
 			<odometryFrame>odom</odometryFrame>
 			<odometryRate>10.0</odometryRate>
 			<robotBaseFrame>footprint</robotBaseFrame>
@@ -120,7 +120,7 @@
 				</noise>
 			</ray>
 			<plugin name="gpu_laser" filename="libgazebo_ros_laser.so">
-				<topicName>/scan</topicName>
+				<topicName>roverbot/scan</topicName>
 				<frameName>laser_link</frameName>
 			</plugin>
 		</sensor>
@@ -131,7 +131,7 @@
 		<plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
 			<alwaysOn>true</alwaysOn>
 			<bodyName>base_link</bodyName>
-			<topicName>imu</topicName>
+			<topicName>roverbot/imu</topicName>
 			<serviceName>imu_service</serviceName>
 			<gaussianNoise>0.0</gaussianNoise>
 			<updateRate>20.0</updateRate>
@@ -144,7 +144,7 @@
 			<alwaysOn>1</alwaysOn>
 			<updateRate>10.0</updateRate>
 			<bodyName>base_link</bodyName>
-			<topicName>gps</topicName>
+			<topicName>roverbot/gps</topicName>
 			<velocityTopicName>gps_velocity</velocityTopicName>
 			<drift>5.0 5.0 5.0</drift>
 			<gaussianNoise>0.1 0.1 0.1</gaussianNoise>

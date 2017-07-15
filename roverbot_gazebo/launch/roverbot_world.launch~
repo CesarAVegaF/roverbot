@@ -26,14 +26,17 @@
 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find roverbot)/roverbot_description/urdf/roverbot.xacro'" />
 	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
 
-	<!-- Spawn a rover in Gazebo, taking the description from the
+	<!-- Spawn a roverbot in Gazebo, taking the description from the
 	parameter server -->
 	<node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" output="screen" args="-param robot_description -urdf -model roverbot" />
 
 	<!-- Start rviz visualization with preset config -->
 	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find roverbot)/roverbot_gazebo/rviz/roverbot.rviz" required="true" />
 
-	<!-- ros_control mybot launch file -->
-	<include file="$(find roverbot)/roverbot_control/launch/teleop.launch" /> 
+	<!-- ros_control roverbot launch file -->
+	<include file="$(find roverbot)/roverbot_control/launch/roverbot_control.launch" /> 
+
+	<!-- ros_comunication roverbot launch file -->
+	<include file="$(find roverbot)/roverbot_comunication/launch/roverbot_comunication.launch" /> 
 
 </launch>

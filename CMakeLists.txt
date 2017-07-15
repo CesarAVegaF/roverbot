@@ -4,8 +4,23 @@ project(roverbot)
 ## Find catkin and any catkin packages
 find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs genmsg tf laser_geometry)
 
+add_message_files(
+  DIRECTORY roverbot_comunication/std_msgs/msg
+  FILES
+  Obstacles.msg
+  Point.msg
+)
+
 ## Generate added messages and services
 generate_messages(DEPENDENCIES std_msgs)
+
+catkin_package(
+  INCLUDE_DIRS roverbot_comunication/std_msgs/include
+  CATKIN_DEPENDS message_runtime)
+
+install(DIRECTORY roverbot_comunication/std_msgs/include/std_msgs/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  PATTERN "*.h")
 
 ## Declare a catkin package
 catkin_package()
