@@ -201,11 +201,11 @@ public:
 	    }
 	    // filtra casos donde esta en el borde del radar
 	    if(minDistance[0] < xBot-((xBot*1)/100.0)){
-		printf("Obstaculo: %d\n", obstaculos++);
-		printf("Rango de vision sobre el obstaculo:\n"); 
-		printf("angulo --> %4.2f; distancia --> %4.4f m\n", minTheta, minNorma[0]);
-		printf("angulo --> %4.2f; distancia --> %4.4f m\n", maxTheta, maxNorma[0]);
-	        printf("Punto cercano: angulo --> %4.2f; distancia --> %4.4f m\n", theta, minDistance[0]);
+		//printf("Obstaculo: %d\n", obstaculos++);
+		//printf("Rango de vision sobre el obstaculo:\n"); 
+		//printf("angulo --> %4.2f; distancia --> %4.4f m\n", minTheta, minNorma[0]);
+		//printf("angulo --> %4.2f; distancia --> %4.4f m\n", maxTheta, maxNorma[0]);
+	        //printf("Punto cercano: angulo --> %4.2f; distancia --> %4.4f m\n", theta, minDistance[0]);
 
 		point.min_theta = minTheta;
 		point.theta = theta;

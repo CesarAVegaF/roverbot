@@ -223,7 +223,7 @@ public:
     }
 
     msg.size = msg.obstacles.size();
-    msg.label = "listener_socket: roverbot/Obstacles";
+    msg.label = "ros_topic: roverbot/Obstacles";
 
     return msg;
 	
